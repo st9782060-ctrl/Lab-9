@@ -1,0 +1,55 @@
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+#include <climits>
+
+using namespace std;
+
+int main() {
+    srand(static_cast<unsigned int>(time(0)));
+
+    const int n = 10;
+    int arr[n];
+
+    // Генеруємо масив різних випадкових чисел від 1 до 100
+    for (int i = 0; i < n; i++) {
+        int candidate;
+        bool unique;
+        do {
+            unique = true;
+            candidate = rand() % 100 + 1;
+            for (int j = 0; j < i; j++) {
+                if (arr[j] == candidate) {
+                    unique = false;
+                    break;
+                }
+            }
+        } while (!unique);
+        arr[i] = candidate;
+    }
+
+    cout << "Generated array: ";
+    for (int i = 0; i < n; i++) {
+        cout << arr[i] << " ";
+    }
+    cout << endl;
+
+    int firstMax = INT_MIN;
+    int secondMax = INT_MIN;
+
+    for (int i = 0; i < n; i++) {
+        if (arr[i] > firstMax) {
+            secondMax = firstMax;
+            firstMax = arr[i];
+        } else if (arr[i] > secondMax && arr[i] < firstMax) {
+            secondMax = arr[i];
+        }
+    }
+
+    cout << "Largest element: " << firstMax << endl;
+    cout << "Second largest element: " << secondMax << endl;
+
+    cout << "Press Enter to exit...";
+    cin.get();
+    return 0;
+}
